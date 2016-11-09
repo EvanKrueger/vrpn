@@ -320,11 +320,22 @@ float vrpn_Tracker_NDI_Polaris::parse6CharFloatFromNDIResponse(unsigned char* st
 // The caller passes in the string, and a pointer to an (int) index into that string (which will be advanced
 // to the end of the value we just parsed.
 // The caller must make sure the string is at least seven characters long
-float vrpn_Tracker_NDI_Polaris::parse7CharFloatFromNDIResponse(unsigned char* str,  int* strIndexPtr) {
-	int intVal;
-	sscanf((char*) &(str[*strIndexPtr]),"%7d",&intVal);
-	*strIndexPtr+=7;
-    return (intVal/100.0f); 
+
+// ORIGINAL parse7CharFloatFromNDIResponse function
+//float vrpn_Tracker_NDI_Polaris::parse7CharFloatFromNDIResponse(unsigned char* str,  int* strIndexPtr) {
+//	int intVal;
+//	sscanf((char*) &(str[*strIndexPtr]),"%7d",&intVal);
+//	*strIndexPtr+=7;
+//    return (intVal/100.0f); 
+//}
+
+//using namespace std;
+// NDI parse7CharFloatFromNDIResponse function
+float vrpn_Tracker_NDI_Polaris::parse7CharFloatFromNDIResponse(string str,  int strIndexPtr) {
+	std::string str2 = str.substr (10,17);
+	float intVal = std::stof(str2);
+	strIndexPtr+=7;
+	return (intVal/100.0f);
 }
 
 int vrpn_Tracker_NDI_Polaris::setupOneTool(const char* NDIToolRomFilename)
